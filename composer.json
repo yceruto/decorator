@@ -1,6 +1,7 @@
 {
     "name": "yceruto/decorator",
     "description": "PHP function decorators",
+    "keywords": ["decorator", "wrapper"],
     "type": "library",
     "license": "MIT",
     "authors": [
