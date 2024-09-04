@@ -1,9 +1,9 @@
 # PHP Function Decorator
 
-[![Latest Stable Version](http://poser.pugx.org/yceruto/decorator/v)](https://packagist.org/packages/yceruto/decorator) 
-[![Total Downloads](http://poser.pugx.org/yceruto/decorator/downloads)](https://packagist.org/packages/yceruto/decorator) 
-[![Latest Unstable Version](http://poser.pugx.org/yceruto/decorator/v/unstable)](https://packagist.org/packages/yceruto/decorator) 
-[![License](http://poser.pugx.org/yceruto/decorator/license)](https://packagist.org/packages/yceruto/decorator)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/yceruto/decorator/ci.yml)
+![PHP](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fyceruto%2Fdecorator%2Fraw%2Fmain%2Fcomposer.json&query=require.php&label=php)
+![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpackagist.org%2Fpackages%2Fyceruto%2Fdecorator.json&query=package.downloads.total&label=downloads)
+![GitHub License](https://img.shields.io/github/license/yceruto/decorator)
 
 A function that modifies the behavior of another function or method by wrapping it, without changing its source code.
 
