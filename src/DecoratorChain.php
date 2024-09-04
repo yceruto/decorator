@@ -14,27 +14,16 @@ declare(strict_types=1);
 namespace Yceruto\Decorator;
 
 use Psr\Container\ContainerInterface;
-use Symfony\Contracts\Service\ServiceLocatorTrait;
 use Yceruto\Decorator\Attribute\Decorate;
 
 class DecoratorChain implements DecoratorInterface
 {
     /**
-     * @param ContainerInterface $decorators Locator of decorators, keyed by service id
+     * @param ContainerInterface $decorators Locator of decorators, keyed by identifier
      */
     public function __construct(
-        private readonly ContainerInterface $decorators,
+        private readonly ContainerInterface $decorators = new DecoratorLocator([]),
     ) {
-    }
-
-    /**
-     * @param array<string, callable(): DecoratorInterface> $decorators
-     */
-    public static function from(array $decorators): self
-    {
-        return new self(new class($decorators) implements ContainerInterface {
-            use ServiceLocatorTrait;
-        });
     }
 
     public function call(callable $callable, mixed ...$args): mixed
@@ -45,7 +34,13 @@ class DecoratorChain implements DecoratorInterface
     public function decorate(\Closure $func): \Closure
     {
         foreach ($this->getAttributes($func) as $attribute) {
-            $func = $this->decorators->get($attribute->id)->decorate($func, ...$attribute->options);
+            if ($attribute instanceof DecoratorInterface && !$this->decorators->has($attribute->id)) {
+                $decorator = $attribute;
+            } else {
+                $decorator = $this->decorators->get($attribute->id);
+            }
+
+            $func = $decorator->decorate($func, ...$attribute->options);
         }
 
         return $func;

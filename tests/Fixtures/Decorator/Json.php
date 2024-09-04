@@ -14,12 +14,22 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
 use Yceruto\Decorator\Attribute\Decorate;
+use Yceruto\Decorator\DecoratorInterface;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-final class Json extends Decorate
+final class Json extends Decorate implements DecoratorInterface
 {
     public function __construct()
     {
-        parent::__construct(JsonDecorator::class);
+        parent::__construct(self::class);
+    }
+
+    public function decorate(\Closure $func): \Closure
+    {
+        return static function (mixed ...$args) use ($func): string {
+            $result = $func(...$args);
+
+            return json_encode($result, JSON_THROW_ON_ERROR);
+        };
     }
 }

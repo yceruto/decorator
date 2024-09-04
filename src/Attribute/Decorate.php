@@ -20,7 +20,7 @@ namespace Yceruto\Decorator\Attribute;
 class Decorate
 {
     /**
-     * @param string               $id      The decorator service id
+     * @param string               $id      The decorator identifier
      * @param array<string, mixed> $options The decorator options to pass through
      */
     public function __construct(

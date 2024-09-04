@@ -17,8 +17,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yceruto\Decorator\DecoratorChain;
+use Yceruto\Decorator\DecoratorLocator;
 use Yceruto\Decorator\Tests\Fixtures\Controller\CreateTaskController;
-use Yceruto\Decorator\Tests\Fixtures\Decorator\JsonDecorator;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingDecorator;
 use Yceruto\Decorator\Tests\Fixtures\Handler\Message;
@@ -34,10 +34,9 @@ class DecoratorChainTest extends TestCase
     protected function setUp(): void
     {
         $this->logger = new TestLogger();
-        $this->decorator = DecoratorChain::from([
-            JsonDecorator::class => fn () => new JsonDecorator(),
+        $this->decorator = new DecoratorChain(new DecoratorLocator([
             LoggingDecorator::class => fn () => new LoggingDecorator($this->logger),
-        ]);
+        ]));
     }
 
     public function testTopDecoratedFunc(): void

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Yceruto\Decorator;
 
 /**
- * Decorates the functionality of other function.
+ * Decorates the functionality of a given function.
  */
 interface DecoratorInterface
 {
