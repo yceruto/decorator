@@ -1,0 +1,34 @@
+{
+    "name": "yceruto/decorator",
+    "description": "PHP function decorators",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yonel Ceruto",
+            "email": "open@yceruto.dev"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "psr/container": "^1.1|^2.0",
+        "symfony/service-contracts": "^2.5|^3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpunit/phpunit": "^11.3",
+        "phpstan/phpstan": "^1.12",
+        "psr/log": "^1|^2|^3",
+        "symfony/dependency-injection": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yceruto\\Decorator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yceruto\\Decorator\\Tests\\": "tests/"
+        }
+    }
+}
