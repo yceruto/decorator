@@ -1,9 +1,9 @@
 # PHP Function Decorator
 
-[![Latest Stable Version](https://poser.pugx.org/yceruto/decorator/v?v=1)](https://packagist.org/packages/yceruto/decorator)
-[![Stable](http://poser.pugx.org/yceruto/decorator/v/stable)](https://packagist.org/packages/yceruto/decorator)
-[![License](https://poser.pugx.org/yceruto/decorator/license)](https://packagist.org/packages/yceruto/decorator)
-[![PHP Version Require](https://poser.pugx.org/yceruto/decorator/require/php)](https://packagist.org/packages/yceruto/decorator)
+[![Latest Stable Version](http://poser.pugx.org/yceruto/decorator/v)](https://packagist.org/packages/yceruto/decorator) 
+[![Total Downloads](http://poser.pugx.org/yceruto/decorator/downloads)](https://packagist.org/packages/yceruto/decorator) 
+[![Latest Unstable Version](http://poser.pugx.org/yceruto/decorator/v/unstable)](https://packagist.org/packages/yceruto/decorator) 
+[![License](http://poser.pugx.org/yceruto/decorator/license)](https://packagist.org/packages/yceruto/decorator)
 
 A function that modifies the behavior of another function or method by wrapping it, without changing its source code.
 
@@ -54,8 +54,8 @@ class Greeting
         echo "Hello $name!\n";
     }
 }
-$greeting = new Greeting();
 
+$greeting = new Greeting();
 $decorator = new DecoratorChain();
 $decorator->call($greeting->sayHello(...), 'Eve');
 ```
