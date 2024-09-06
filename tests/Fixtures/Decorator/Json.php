@@ -13,17 +13,12 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
-use Yceruto\Decorator\Attribute\Decorate;
+use Yceruto\Decorator\Attribute\DecoratorMetadata;
 use Yceruto\Decorator\DecoratorInterface;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-final class Json extends Decorate implements DecoratorInterface
+final class Json extends DecoratorMetadata implements DecoratorInterface
 {
-    public function __construct()
-    {
-        parent::__construct(self::class);
-    }
-
     public function decorate(\Closure $func): \Closure
     {
         return static function (mixed ...$args) use ($func): string {
@@ -31,5 +26,10 @@ final class Json extends Decorate implements DecoratorInterface
 
             return json_encode($result, JSON_THROW_ON_ERROR);
         };
+    }
+
+    public function decoratedBy(): string
+    {
+        return self::class;
     }
 }

@@ -11,16 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
+namespace Yceruto\Decorator\Resolver;
 
-use Psr\Log\LogLevel;
 use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\DecoratorInterface;
 
-#[\Attribute(\Attribute::TARGET_FUNCTION | \Attribute::TARGET_METHOD)]
-final class Logging extends DecoratorMetadata
+/**
+ * Resolves the decorator linked to a given decorator metadata.
+ */
+interface DecoratorResolverInterface
 {
-    public function __construct(
-        public readonly string $level = LogLevel::DEBUG,
-    ) {
-    }
+    public function resolve(DecoratorMetadata $metadata): DecoratorInterface;
 }

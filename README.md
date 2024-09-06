@@ -1,14 +1,18 @@
-# PHP Function Decorator
+# PHP Callable Decorator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/yceruto/decorator/ci.yml)
 ![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frepo.packagist.org%2Fp2%2Fyceruto%2Fdecorator.json&query=%24.packages%5B%22yceruto%2Fdecorator%22%5D%5B0%5D.version&label=version)
 ![PHP](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fyceruto%2Fdecorator%2Fraw%2Fmain%2Fcomposer.json&query=require.php&label=php)
 ![GitHub License](https://img.shields.io/github/license/yceruto/decorator)
 
-A function that modifies the behavior of another function or method by wrapping it, without changing its source code.
-
 > [!NOTE]
 > Inspired by [Python's decorator](https://peps.python.org/pep-0318/)
+
+This library implements the [Decorator Pattern](https://en.wikipedia.org/wiki/Decorator_pattern) around 
+any [PHP callable](https://www.php.net/manual/en/language.types.callable.php), allowing you to:
+ * Execute logic before or after a callable is executed
+ * Skip the execution of a callable by returning earlier
+ * Modify the result of a callable
 
 ## Installation
 
@@ -16,21 +20,20 @@ A function that modifies the behavior of another function or method by wrapping 
 composer require yceruto/decorator
 ```
 
-## Basic usage
+## Usage
 
 ```php
-use Yceruto\Decorator\Attribute\Decorate;
-use Yceruto\Decorator\DecoratorChain;
+use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\CallableDecorator;
 use Yceruto\Decorator\DecoratorInterface;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class MyDecorator extends Decorate implements DecoratorInterface
+class Debug extends DecoratorMetadata
 {
-    public function __construct()
-    {
-        parent::__construct(self::class);
-    }
+}
 
+class DebugDecorator implements DecoratorInterface
+{
     public function decorate(\Closure $func): \Closure
     {
         return function (mixed ...$args) use ($func): mixed
@@ -48,7 +51,7 @@ class MyDecorator extends Decorate implements DecoratorInterface
 
 class Greeting
 {
-    #[MyDecorator]
+    #[Debug]
     public function sayHello(string $name): void
     {
         echo "Hello $name!\n";
@@ -56,13 +59,13 @@ class Greeting
 }
 
 $greeting = new Greeting();
-$decorator = new DecoratorChain();
-$decorator->call($greeting->sayHello(...), 'Eve');
+$decorator = new CallableDecorator();
+$decorator->call($greeting->sayHello(...), 'John');
 ```
 Output:
 ```
 Do something before
-Hello Eve!
+Hello John!
 Do something after
 ```
 

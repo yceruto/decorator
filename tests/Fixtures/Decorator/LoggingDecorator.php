@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use Yceruto\Decorator\DecoratorInterface;
 
 final readonly class LoggingDecorator implements DecoratorInterface
@@ -24,14 +23,14 @@ final readonly class LoggingDecorator implements DecoratorInterface
     ) {
     }
 
-    public function decorate(\Closure $func, string $level = LogLevel::DEBUG): \Closure
+    public function decorate(\Closure $func, Logging $metadata = new Logging()): \Closure
     {
-        return function (mixed ...$args) use ($func, $level): mixed {
-            $this->logger->log($level, 'Before calling func', ['args' => count($args)]);
+        return function (mixed ...$args) use ($func, $metadata): mixed {
+            $this->logger->log($metadata->level, 'Before calling func', ['args' => count($args)]);
 
             $result = $func(...$args);
 
-            $this->logger->log($level, 'After calling func', ['result' => $result]);
+            $this->logger->log($metadata->level, 'After calling func', ['result' => $result]);
 
             return $result;
         };

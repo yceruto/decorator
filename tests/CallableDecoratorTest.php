@@ -16,8 +16,8 @@ namespace Yceruto\Decorator\Tests;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yceruto\Decorator\DecoratorChain;
-use Yceruto\Decorator\DecoratorLocator;
+use Yceruto\Decorator\CallableDecorator;
+use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Tests\Fixtures\Controller\CreateTaskController;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingDecorator;
@@ -25,16 +25,16 @@ use Yceruto\Decorator\Tests\Fixtures\Handler\Message;
 use Yceruto\Decorator\Tests\Fixtures\Handler\MessageHandler;
 use Yceruto\Decorator\Tests\Fixtures\Logger\TestLogger;
 
-#[CoversClass(DecoratorChain::class)]
-class DecoratorChainTest extends TestCase
+#[CoversClass(CallableDecorator::class)]
+class CallableDecoratorTest extends TestCase
 {
     private TestLogger $logger;
-    private DecoratorChain $decorator;
+    private CallableDecorator $decorator;
 
     protected function setUp(): void
     {
         $this->logger = new TestLogger();
-        $this->decorator = new DecoratorChain(new DecoratorLocator([
+        $this->decorator = new CallableDecorator(new DecoratorResolver([
             LoggingDecorator::class => fn () => new LoggingDecorator($this->logger),
         ]));
     }
