@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Resolver;
 
-use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\DecoratorInterface;
 
 /**
@@ -21,5 +21,5 @@ use Yceruto\Decorator\DecoratorInterface;
  */
 interface DecoratorResolverInterface
 {
-    public function resolve(DecoratorMetadata $metadata): DecoratorInterface;
+    public function resolve(DecoratorAttribute $metadata): DecoratorInterface;
 }

@@ -23,12 +23,12 @@ composer require yceruto/decorator
 ## Usage
 
 ```php
-use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\CallableDecorator;
 use Yceruto\Decorator\DecoratorInterface;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class Debug extends DecoratorMetadata
+class Debug extends DecoratorAttribute
 {
 }
 

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Attribute;
 
 /**
- * DecoratorMetadata is the abstract class for all decorator metadata attributes.
+ * Abstract class for all decorator attributes.
  */
-abstract class DecoratorMetadata
+abstract class DecoratorAttribute
 {
     public function decoratedBy(): string
     {

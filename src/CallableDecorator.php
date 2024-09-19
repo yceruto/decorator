@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator;
 
-use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Resolver\DecoratorResolverInterface;
 
@@ -34,19 +34,19 @@ class CallableDecorator implements DecoratorInterface
 
     public function decorate(\Closure $func): \Closure
     {
-        foreach ($this->getMetadata($func) as $metadata) {
-            $func = $this->resolver->resolve($metadata)->decorate($func, $metadata);
+        foreach ($this->getAttributes($func) as $attribute) {
+            $func = $this->resolver->resolve($attribute)->decorate($func, $attribute);
         }
 
         return $func;
     }
 
     /**
-     * @return iterable<DecoratorMetadata>
+     * @return iterable<DecoratorAttribute>
      */
-    private function getMetadata(\Closure $func): iterable
+    private function getAttributes(\Closure $func): iterable
     {
-        $attributes = (new \ReflectionFunction($func))->getAttributes(DecoratorMetadata::class, \ReflectionAttribute::IS_INSTANCEOF);
+        $attributes = (new \ReflectionFunction($func))->getAttributes(DecoratorAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);
 
         foreach (array_reverse($attributes) as $attribute) {
             yield $attribute->newInstance();

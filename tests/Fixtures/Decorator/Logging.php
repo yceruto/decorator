@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
 use Psr\Log\LogLevel;
-use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 
 #[\Attribute(\Attribute::TARGET_FUNCTION | \Attribute::TARGET_METHOD)]
-final class Logging extends DecoratorMetadata
+final class Logging extends DecoratorAttribute
 {
     public function __construct(
         public readonly string $level = LogLevel::DEBUG,

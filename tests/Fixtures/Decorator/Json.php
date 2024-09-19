@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
-use Yceruto\Decorator\Attribute\DecoratorMetadata;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\DecoratorInterface;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-final class Json extends DecoratorMetadata implements DecoratorInterface
+final class Json extends DecoratorAttribute implements DecoratorInterface
 {
     public function decorate(\Closure $func): \Closure
     {
