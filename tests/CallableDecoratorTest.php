@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yceruto\Decorator\CallableDecorator;
+use Yceruto\Decorator\CompoundDecorator;
 use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Tests\Fixtures\Controller\CreateTaskController;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
@@ -34,8 +35,9 @@ class CallableDecoratorTest extends TestCase
     protected function setUp(): void
     {
         $this->logger = new TestLogger();
-        $this->decorator = new CallableDecorator(new DecoratorResolver([
+        $this->decorator = new CallableDecorator($resolver = new DecoratorResolver([
             LoggingDecorator::class => fn () => new LoggingDecorator($this->logger),
+            CompoundDecorator::class => function () use (&$resolver) { return new CompoundDecorator($resolver); },
         ]));
     }
 
@@ -67,6 +69,29 @@ class CallableDecoratorTest extends TestCase
         ];
 
         $this->assertSame('{"id":1,"description":"Take a break!"}', $result);
+        $this->assertSame($expectedRecords, $this->logger->records);
+    }
+
+    public function testCompoundDecorators(): void
+    {
+        $controller = new CreateTaskController();
+
+        $result = $this->decorator->call($controller->compound(...));
+
+        $expectedRecords = [
+            [
+                'level' => 'debug',
+                'message' => 'Before calling func',
+                'context' => ['args' => 0],
+            ],
+            [
+                'level' => 'debug',
+                'message' => 'After calling func',
+                'context' => ['result' => '{"id":2,"description":"Take a second break!"}'],
+            ],
+        ];
+
+        $this->assertSame('{"id":2,"description":"Take a second break!"}', $result);
         $this->assertSame($expectedRecords, $this->logger->records);
     }
 
