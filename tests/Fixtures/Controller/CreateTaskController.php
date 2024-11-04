@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Controller;
 
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Json;
+use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingJson;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
 
 final readonly class CreateTaskController
@@ -23,5 +24,11 @@ final readonly class CreateTaskController
     public function __invoke(): Task
     {
         return new Task(1, 'Take a break!');
+    }
+
+    #[LoggingJson]
+    public function compound(): Task
+    {
+        return new Task(2, 'Take a second break!');
     }
 }
