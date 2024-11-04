@@ -69,6 +69,44 @@ Hello John!
 Do something after
 ```
 
+## Decorators
+
+### Compound
+
+To create a reusable set of decorators, extend the `Compound` class:
+
+```php
+use Yceruto\Decorator\Attribute\Compound;
+
+#[\Attribute(\Attribute::TARGET_METHOD)]
+class Greetings extends Compound
+{
+    /**
+     * @return array<DecoratorAttribute>
+     */
+    public function getDecorators(array $options): array
+    {
+        return [
+            new Hello(),
+            new Welcome(),
+            // ...
+        ];
+    }
+}
+
+class Greeting
+{
+    #[Greetings]
+    public function __invoke(): void
+    {
+        // ...
+    }
+}
+```
+
+When the `Greeting::__invoke()` method is decorated, the `Hello` and `Welcome` decorator attributes will be applied 
+in the specified order. This is equivalent to directly defining `#[Hello]` and `#[Welcome]` on this method.
+
 ## License
 
 This software is published under the [MIT License](LICENSE)
