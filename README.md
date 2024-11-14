@@ -69,6 +69,10 @@ Hello John!
 Do something after
 ```
 
+## Frameworks Integration
+
+* Symfony: https://github.com/yceruto/decorator-bundle
+
 ## Decorators
 
 ### Compound
