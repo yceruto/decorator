@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Attribute;
 
+use Yceruto\Decorator\DecoratorInterface;
+
 /**
  * Abstract class for all decorator attributes.
  */
@@ -20,6 +22,10 @@ abstract class DecoratorAttribute
 {
     public function decoratedBy(): string
     {
+        if ($this instanceof DecoratorInterface) {
+            return static::class;
+        }
+
         return static::class.'Decorator';
     }
 }
