@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Controller;
 
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Json;
-use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingJson;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
+use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingJson;
 
 final readonly class CreateTaskController
 {
