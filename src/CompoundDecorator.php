@@ -14,17 +14,16 @@ declare(strict_types=1);
 namespace Yceruto\Decorator;
 
 use Yceruto\Decorator\Attribute\Compound;
-use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Resolver\DecoratorResolverInterface;
 
 class CompoundDecorator implements DecoratorInterface
 {
     public function __construct(
-        private readonly DecoratorResolverInterface $resolver = new DecoratorResolver([]),
+        private readonly DecoratorResolverInterface $resolver,
     ) {
     }
 
-    public function decorate(\Closure $func, Compound $compound = new DefaultCompound()): \Closure
+    public function decorate(\Closure $func, Compound $compound = new EmptyCompound()): \Closure
     {
         $attributes = $compound->getDecorators($compound->options);
 
@@ -39,7 +38,7 @@ class CompoundDecorator implements DecoratorInterface
 /**
  * @internal
  */
-final class DefaultCompound extends Compound
+final class EmptyCompound extends Compound
 {
     public function getDecorators(array $options): array
     {
