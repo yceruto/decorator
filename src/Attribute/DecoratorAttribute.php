@@ -16,9 +16,9 @@ namespace Yceruto\Decorator\Attribute;
 use Yceruto\Decorator\DecoratorInterface;
 
 /**
- * Abstract class for all decorator attributes.
+ * Abstract class for all decorator attributes with default convention.
  */
-abstract class DecoratorAttribute
+abstract class DecoratorAttribute implements DecoratorAttributeInterface
 {
     public function decoratedBy(): string
     {

@@ -22,6 +22,7 @@ use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Tests\Fixtures\Controller\CreateTaskController;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\LoggingDecorator;
+use Yceruto\Decorator\Tests\Fixtures\Handler\InvokableMessageHandler;
 use Yceruto\Decorator\Tests\Fixtures\Handler\Message;
 use Yceruto\Decorator\Tests\Fixtures\Handler\MessageHandler;
 use Yceruto\Decorator\Tests\Fixtures\Logger\TestLogger;
@@ -106,6 +107,10 @@ class CallableDecoratorTest extends TestCase
 
     public static function getCallableProvider(): iterable
     {
+        yield 'non_decorated_function' => [
+            strtoupper(...), ['bar'], 'BAR', [],
+        ];
+
         #[Logging]
         function foo(string $bar): string
         {
@@ -129,8 +134,24 @@ class CallableDecoratorTest extends TestCase
 
         $message = new Message();
         $handler = new MessageHandler();
+        $invokableHandler = new InvokableMessageHandler();
 
         yield 'invokable_object' => [
+            $invokableHandler, [$message], $message, [
+                [
+                    'level' => 'debug',
+                    'message' => 'Before calling func',
+                    'context' => ['args' => 1],
+                ],
+                [
+                    'level' => 'debug',
+                    'message' => 'After calling func',
+                    'context' => ['result' => $message],
+                ],
+            ],
+        ];
+
+        yield 'invokable_method' => [
             $handler, [$message], $message, [
                 [
                     'level' => 'debug',
