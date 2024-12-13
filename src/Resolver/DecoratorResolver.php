@@ -15,23 +15,23 @@ namespace Yceruto\Decorator\Resolver;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceLocatorTrait;
-use Yceruto\Decorator\Attribute\DecoratorAttribute;
+use Yceruto\Decorator\Attribute\DecoratorAttributeInterface;
 use Yceruto\Decorator\DecoratorInterface;
 
 class DecoratorResolver implements DecoratorResolverInterface, ContainerInterface
 {
     use ServiceLocatorTrait;
 
-    public function resolve(DecoratorAttribute $metadata): DecoratorInterface
+    public function resolve(DecoratorAttributeInterface $attribute): DecoratorInterface
     {
-        $id = $metadata->decoratedBy();
+        $id = $attribute->decoratedBy();
 
         if ($this->has($id)) {
             return $this->get($id);
         }
 
-        if ($metadata::class === $id && $metadata instanceof DecoratorInterface) {
-            return $metadata;
+        if ($attribute::class === $id && $attribute instanceof DecoratorInterface) {
+            return $attribute;
         }
 
         if (class_exists($id)) {
