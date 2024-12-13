@@ -36,7 +36,7 @@ abstract class Compound extends DecoratorAttribute
     /**
      * @param array<string, mixed> $options
      *
-     * @return array<DecoratorAttribute>
+     * @return array<DecoratorAttributeInterface>
      */
     abstract public function getDecorators(array $options): array;
 }
