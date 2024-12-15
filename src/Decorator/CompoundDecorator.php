@@ -11,9 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Yceruto\Decorator;
+namespace Yceruto\Decorator\Decorator;
 
-use Yceruto\Decorator\Attribute\Compound;
+use Yceruto\Decorator\Attribute\CompoundDecoratorAttribute;
+use Yceruto\Decorator\Attribute\CompoundDecoratorAttributeInterface;
+use Yceruto\Decorator\DecoratorInterface;
 use Yceruto\Decorator\Resolver\DecoratorResolverInterface;
 
 class CompoundDecorator implements DecoratorInterface
@@ -23,9 +25,9 @@ class CompoundDecorator implements DecoratorInterface
     ) {
     }
 
-    public function decorate(\Closure $func, Compound $compound = new EmptyCompound()): \Closure
+    public function decorate(\Closure $func, CompoundDecoratorAttributeInterface $compound = new EmptyCompound()): \Closure
     {
-        $attributes = $compound->getDecorators($compound->options);
+        $attributes = $compound->getAttributes($compound->getOptions());
 
         foreach (array_reverse($attributes) as $attribute) {
             $func = $this->resolver->resolve($attribute)->decorate($func, $attribute);
@@ -38,9 +40,9 @@ class CompoundDecorator implements DecoratorInterface
 /**
  * @internal
  */
-final class EmptyCompound extends Compound
+final class EmptyCompound extends CompoundDecoratorAttribute
 {
-    public function getDecorators(array $options): array
+    public function getAttributes(array $options): array
     {
         return [];
     }
