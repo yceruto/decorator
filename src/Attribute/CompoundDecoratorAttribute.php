@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Attribute;
 
-use Yceruto\Decorator\CompoundDecorator;
+use Yceruto\Decorator\Decorator\CompoundDecorator;
 
 /**
  * Extend this class to create a reusable set of decorators.
  */
-abstract class Compound extends DecoratorAttribute
+abstract class CompoundDecoratorAttribute implements CompoundDecoratorAttributeInterface
 {
     /**
      * @param array<string, mixed> $options
@@ -33,10 +33,8 @@ abstract class Compound extends DecoratorAttribute
         return CompoundDecorator::class;
     }
 
-    /**
-     * @param array<string, mixed> $options
-     *
-     * @return array<DecoratorAttributeInterface>
-     */
-    abstract public function getDecorators(array $options): array;
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
 }

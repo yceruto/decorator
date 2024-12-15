@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
-use Yceruto\Decorator\Attribute\Compound;
+use Yceruto\Decorator\Attribute\CompoundDecoratorAttribute;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class LoggingJson extends Compound
+class LoggingJson extends CompoundDecoratorAttribute
 {
-    public function getDecorators(array $options): array
+    public function getAttributes(array $options): array
     {
         return [
             new Logging(),

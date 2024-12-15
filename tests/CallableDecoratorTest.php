@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yceruto\Decorator\CallableDecorator;
-use Yceruto\Decorator\CompoundDecorator;
+use Yceruto\Decorator\Decorator\CompoundDecorator;
 use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Tests\Fixtures\Controller\CreateTaskController;
 use Yceruto\Decorator\Tests\Fixtures\Decorator\Logging;
