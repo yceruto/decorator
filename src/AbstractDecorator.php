@@ -11,20 +11,18 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
+namespace Yceruto\Decorator;
 
 use Yceruto\Decorator\Attribute\DecoratorAttribute;
-use Yceruto\Decorator\DecoratorInterface;
 
-#[\Attribute(\Attribute::TARGET_METHOD)]
-final class Json extends DecoratorAttribute implements DecoratorInterface
+abstract class AbstractDecorator implements DecoratorInterface
 {
     public function decorate(\Closure $func, DecoratorAttribute $attribute): \Closure
     {
-        return static function (mixed ...$args) use ($func): string {
-            $result = $func(...$args);
-
-            return json_encode($result, JSON_THROW_ON_ERROR);
+        return function (mixed ...$args) use ($func, $attribute): mixed {
+            return $this->call($attribute, $func, ...$args);
         };
     }
+
+    abstract protected function call(DecoratorAttribute $attribute, \Closure $func, mixed ...$args): mixed;
 }

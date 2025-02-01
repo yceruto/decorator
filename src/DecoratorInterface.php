@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator;
 
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
+
 /**
  * Decorates the functionality of a given function.
  */
 interface DecoratorInterface
 {
-    public function decorate(\Closure $func): \Closure;
+    public function decorate(\Closure $func, DecoratorAttribute $attribute): \Closure;
 }

@@ -14,25 +14,27 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Tests\Fixtures\Decorator;
 
 use Psr\Log\LoggerInterface;
-use Yceruto\Decorator\DecoratorInterface;
+use Yceruto\Decorator\AbstractDecorator;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 
-final readonly class LoggingDecorator implements DecoratorInterface
+final class LoggingDecorator extends AbstractDecorator
 {
     public function __construct(
-        private LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
-    public function decorate(\Closure $func, Logging $metadata = new Logging()): \Closure
+    /**
+     * @param Logging $attribute
+     */
+    protected function call(DecoratorAttribute $attribute, \Closure $func, mixed ...$args): mixed
     {
-        return function (mixed ...$args) use ($func, $metadata): mixed {
-            $this->logger->log($metadata->level, 'Before calling func', ['args' => count($args)]);
+        $this->logger->log($attribute->level, 'Before calling func', ['args' => count($args)]);
 
-            $result = $func(...$args);
+        $result = $func(...$args);
 
-            $this->logger->log($metadata->level, 'After calling func', ['result' => $result]);
+        $this->logger->log($attribute->level, 'After calling func', ['result' => $result]);
 
-            return $result;
-        };
+        return $result;
     }
 }

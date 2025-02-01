@@ -15,14 +15,14 @@ namespace Yceruto\Decorator\Resolver;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceLocatorTrait;
-use Yceruto\Decorator\Attribute\DecoratorAttributeInterface;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\DecoratorInterface;
 
 class DecoratorResolver implements DecoratorResolverInterface, ContainerInterface
 {
     use ServiceLocatorTrait;
 
-    public function resolve(DecoratorAttributeInterface $attribute): DecoratorInterface
+    public function resolve(DecoratorAttribute $attribute): DecoratorInterface
     {
         $id = $attribute->decoratedBy();
 

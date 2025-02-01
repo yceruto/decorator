@@ -11,15 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Yceruto\Decorator\Attribute;
+namespace Yceruto\Decorator;
 
-/**
- * Interface for all decorator attributes.
- */
-interface DecoratorAttributeInterface
+interface CallableDecoratorInterface
 {
     /**
-     * @return string the class or id of the decorator associated with this attribute
+     * @throws \ReflectionException
      */
-    public function decoratedBy(): string;
+    public function call(callable $callable, mixed ...$args): mixed;
 }

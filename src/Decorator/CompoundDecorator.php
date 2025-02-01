@@ -14,36 +14,28 @@ declare(strict_types=1);
 namespace Yceruto\Decorator\Decorator;
 
 use Yceruto\Decorator\Attribute\CompoundDecoratorAttribute;
-use Yceruto\Decorator\Attribute\CompoundDecoratorAttributeInterface;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\DecoratorInterface;
 use Yceruto\Decorator\Resolver\DecoratorResolverInterface;
 
-class CompoundDecorator implements DecoratorInterface
+readonly class CompoundDecorator implements DecoratorInterface
 {
     public function __construct(
-        private readonly DecoratorResolverInterface $resolver,
+        private DecoratorResolverInterface $resolver,
     ) {
     }
 
-    public function decorate(\Closure $func, CompoundDecoratorAttributeInterface $compound = new EmptyCompound()): \Closure
+    /**
+     * @param CompoundDecoratorAttribute $attribute
+     */
+    public function decorate(\Closure $func, DecoratorAttribute $attribute): \Closure
     {
-        $attributes = $compound->getAttributes($compound->getOptions());
+        $attributes = $attribute->getAttributes($attribute->getOptions());
 
-        foreach (array_reverse($attributes) as $attribute) {
-            $func = $this->resolver->resolve($attribute)->decorate($func, $attribute);
+        foreach (array_reverse($attributes) as $attr) {
+            $func = $this->resolver->resolve($attr)->decorate($func, $attr);
         }
 
         return $func;
-    }
-}
-
-/**
- * @internal
- */
-final class EmptyCompound extends CompoundDecoratorAttribute
-{
-    public function getAttributes(array $options): array
-    {
-        return [];
     }
 }

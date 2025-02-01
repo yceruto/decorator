@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 namespace Yceruto\Decorator;
 
-use Yceruto\Decorator\Attribute\DecoratorAttributeInterface;
+use Yceruto\Decorator\Attribute\DecoratorAttribute;
 use Yceruto\Decorator\Resolver\DecoratorResolver;
 use Yceruto\Decorator\Resolver\DecoratorResolverInterface;
 
 /**
  * Wraps a callable with all the decorators linked to it.
  */
-class CallableDecorator implements DecoratorInterface
+final readonly class CallableDecorator implements CallableDecoratorInterface
 {
     public function __construct(
-        private readonly DecoratorResolverInterface $resolver = new DecoratorResolver([]),
+        private DecoratorResolverInterface $resolver = new DecoratorResolver([]),
     ) {
     }
 
@@ -58,10 +58,10 @@ class CallableDecorator implements DecoratorInterface
     {
         $function = new \ReflectionFunction($func);
 
-        $attributes = $function->getAttributes(DecoratorAttributeInterface::class, \ReflectionAttribute::IS_INSTANCEOF);
+        $attributes = $function->getAttributes(DecoratorAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);
 
         if (!$attributes && '__invoke' === $function->getName() && $class = $function->getClosureCalledClass()) {
-            $attributes = $class->getAttributes(DecoratorAttributeInterface::class, \ReflectionAttribute::IS_INSTANCEOF);
+            $attributes = $class->getAttributes(DecoratorAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);
         }
 
         foreach (array_reverse($attributes) as $attribute) {

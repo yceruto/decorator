@@ -18,8 +18,11 @@ use Yceruto\Decorator\DecoratorInterface;
 /**
  * Abstract class for all decorator attributes with default convention.
  */
-abstract class DecoratorAttribute implements DecoratorAttributeInterface
+abstract class DecoratorAttribute
 {
+    /**
+     * @return string the class or id of the decorator associated with this attribute
+     */
     public function decoratedBy(): string
     {
         if ($this instanceof DecoratorInterface) {
